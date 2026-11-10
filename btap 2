@@ -1,0 +1,277 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "73cacb55-7d9f-4e49-b76e-0fd84778980c",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdin",
+     "output_type": "stream",
+     "text": [
+      "Nhập số thực (hoặc 'xong'):  9\n"
+     ]
+    }
+   ],
+   "source": [
+    "import math\n",
+    "\n",
+    "tong_so = 0.0\n",
+    "dem = 0\n",
+    "lon_nhat = -math.inf\n",
+    "nho_nhat = math.inf\n",
+    "\n",
+    "print(\"Nhap cac so thuc (go 'xong' de ket thuc):\")\n",
+    "while True:\n",
+    "    user_input = input(\"Nhap so: \")\n",
+    "    if user_input.strip().lower() == \"xong\":\n",
+    "        break\n",
+    "    try:\n",
+    "        val = float(user_input)\n",
+    "        tong_so += val\n",
+    "        dem += 1\n",
+    "        if val > lon_nhat:\n",
+    "            lon_nhat = val\n",
+    "        if val < nho_nhat:\n",
+    "            nho_nhat = val\n",
+    "    except ValueError:\n",
+    "        print(f\"  -> Bo qua gia tri khong phai so hop le: {user_input}\")\n",
+    "\n",
+    "if dem > 0:\n",
+    "    trung_binh = tong_so / dem\n",
+    "    print(\"\\n--- KET QUA THONG KE ---\")\n",
+    "    print(f\"So gia tri hop le: {dem}\")\n",
+    "    print(f\"Tong: {tong_so}\")\n",
+    "    print(f\"Trung binh: {trung_binh}\")\n",
+    "    print(f\"Gia tri lon nhat: {lon_nhat}\")\n",
+    "    print(f\"Gia tri nho nhat: {nho_nhat}\")\n",
+    "else:\n",
+    "    print(\"Chua co du lieu\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "3063b7b6-69c0-434d-bceb-b70cd8238e77",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdin",
+     "output_type": "stream",
+     "text": [
+      "Nhập số giờ làm:  40\n",
+      "Lương giờ (đồng):  100000\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Tiền lương: 4,000,000 đồng\n"
+     ]
+    }
+   ],
+   "source": [
+    "#bài 2.3\n",
+    "def tinh_luong_tuan():\n",
+    "    while True:\n",
+    "        try:\n",
+    "            hours_worked = float(input(\"Nhap so gio lam: \"))\n",
+    "            if hours_worked < 0:\n",
+    "                print(\"Loi: So gio lam khong duoc am! Vui long nhap lai.\")\n",
+    "                continue\n",
+    "            break\n",
+    "        except ValueError:\n",
+    "            print(\"Loi: Ban phai nhap du lieu so! Vui long nhap lai.\")\n",
+    "\n",
+    "    while True:\n",
+    "        try:\n",
+    "            hourly_rate = float(input(\"Luong gio (dong): \"))\n",
+    "            if hourly_rate < 0:\n",
+    "                print(\"Loi: Luong gio khong duoc am! Vui long nhap lai.\")\n",
+    "                continue\n",
+    "            break\n",
+    "        except ValueError:\n",
+    "            print(\"Loi: Ban phai nhap du lieu so! Vui long nhap lai.\")\n",
+    "\n",
+    "    if hours_worked <= 40:\n",
+    "        total_salary = hours_worked * hourly_rate\n",
+    "    else:\n",
+    "        total_salary = 40 * hourly_rate + (hours_worked - 40) * hourly_rate * 1.5\n",
+    "\n",
+    "    print(f\"Tien luong: {total_salary:,.0f} dong\")\n",
+    "\n",
+    "tinh_luong_tuan()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "3028ae7f-202f-4f32-a257-bb802895a532",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Với n = 27:\n",
+      "  - Số bước thực hiện: 111 (Đáp án mẫu: 111)\n",
+      "  - Giá trị lớn nhất: 9232 (Đáp án mẫu: 9232)\n",
+      "Kiểm chứng thành công: Khớp hoàn toàn với đáp án!\n"
+     ]
+    }
+   ],
+   "source": [
+    "#baif2.7\n",
+    "def tinh_day_collatz(n: int):\n",
+    "    so_buoc = 0\n",
+    "    gia_tri_max = n\n",
+    "    \n",
+    "    while n > 1:\n",
+    "        if n % 2 == 0:\n",
+    "            n = n // 2\n",
+    "        else:\n",
+    "            n = 3 * n + 1\n",
+    "        \n",
+    "        so_buoc += 1\n",
+    "        if n > gia_tri_max:\n",
+    "            gia_tri_max = n\n",
+    "            \n",
+    "    return so_buoc, gia_tri_max\n",
+    "\n",
+    "n_ban_dau = 27\n",
+    "so_buoc, gia_tri_lon_nhat = tinh_day_collatz(n_ban_dau)\n",
+    "\n",
+    "print(f\"Voi n = {n_ban_dau}:\")\n",
+    "print(f\"  - So buoc thuc hien: {so_buoc} (Dap an mau: 111)\")\n",
+    "print(f\"  - Gia tri lon nhat: {gia_tri_lon_nhat} (Dap an mau: 9232)\")\n",
+    "\n",
+    "assert so_buoc == 111\n",
+    "assert gia_tri_lon_nhat == 9232\n",
+    "print(\"Kiem chung thanh cong: Khop hoan toan voi dap an!\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "9e07964e-5652-448c-8bf3-b3c97549279c",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "N =     100 | Pi uoc luong: 3.32000 | Sai so: 0.17841 | Nguong: 0.60000\n",
+      "N =  10,000 | Pi uoc luong: 3.14840 | Sai so: 0.00681 | Nguong: 0.06000\n",
+      "N = 1,000,000 | Pi uoc luong: 3.14286 | Sai so: 0.00127 | Nguong: 0.00600\n",
+      "Tat ca cac moc N deu thoa man dieu kien assert!\n"
+     ]
+    }
+   ],
+   "source": [
+    "#baif2.10\n",
+    "import random\n",
+    "import math\n",
+    "\n",
+    "random.seed(2026)\n",
+    "\n",
+    "danh_sach_N = [10**2, 10**4, 10**6]\n",
+    "\n",
+    "for n in danh_sach_N:\n",
+    "    trong_hinh_tron = 0\n",
+    "    for _ in range(n):\n",
+    "        x, y = random.uniform(-1, 1), random.uniform(-1, 1)\n",
+    "        if x**2 + y**2 <= 1:\n",
+    "            trong_hinh_tron += 1\n",
+    "            \n",
+    "    pi_uoc_luong = 4 * trong_hinh_tron / n\n",
+    "    sai_so_tuyet_doi = abs(pi_uoc_luong - math.pi)\n",
+    "    nguong_gioi_han = 6 / math.sqrt(n)\n",
+    "    \n",
+    "    print(f\"N = {n:7,d} | Pi uoc luong: {pi_uoc_luong:.5f} | Sai so: {sai_so_tuyet_doi:.5f} | Nguong: {nguong_gioi_han:.5f}\")\n",
+    "    \n",
+    "    assert sai_so_tuyet_doi < nguong_gioi_han\n",
+    "\n",
+    "print(\"Tat ca cac moc N deu thoa man dieu kien assert!\")\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "c4e4812b-f95a-4ce4-9754-5cb6720be5bc",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Nghiem xap xi: 1.521379706828\n",
+      "So buoc thuc te: 34\n",
+      "So buoc ly thuyet: 34\n",
+      "Kiem chung thanh cong: So buoc thuc te khop hoan toan voi ly thuyet!\n"
+     ]
+    }
+   ],
+   "source": [
+    "#bai2.11\n",
+    "import math\n",
+    "\n",
+    "def ham_f(x):\n",
+    "    return x**3 - x - 2\n",
+    "\n",
+    "can_duoi, can_tren = 1.0, 2.0\n",
+    "sai_so_cho_phep = 1e-10\n",
+    "so_buoc = 0\n",
+    "\n",
+    "while (can_tren - can_duoi) >= sai_so_cho_phep:\n",
+    "    diem_giua = (can_duoi + can_tren) / 2\n",
+    "    so_buoc += 1\n",
+    "    \n",
+    "    if ham_f(can_duoi) * ham_f(diem_giua) < 0:\n",
+    "        can_tren = diem_giua\n",
+    "    else:\n",
+    "        can_duoi = diem_giua\n",
+    "\n",
+    "nghiem_xap_xi = (can_duoi + can_tren) / 2\n",
+    "so_buoc_ly_thuyet = math.ceil(math.log2((2.0 - 1.0) / sai_so_cho_phep))\n",
+    "\n",
+    "print(f\"Nghiem xap xi: {nghiem_xap_xi:.12f}\")\n",
+    "print(f\"So buoc thuc te: {so_buoc}\")\n",
+    "print(f\"So buoc ly thuyet: {so_buoc_ly_thuyet}\")\n",
+    "\n",
+    "assert so_buoc == so_buoc_ly_thuyet\n",
+    "print(\"Kiem chung thanh cong: So buoc thuc te khop hoan toan voi ly thuyet!\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "2f319a0c-ecc1-452a-bf20-23285663f518",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.14.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
